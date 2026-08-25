@@ -52,6 +52,21 @@ class TestWorkspace(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.ws.write("../escaped.md", "nope")
 
+    def test_deep_traversal_is_refused(self):
+        with self.assertRaises(ValueError):
+            self.ws.write("a/../../../etc/ce_should_never_write_here", "nope")
+
+    def test_absolute_paths_are_refused(self):
+        with self.assertRaises(ValueError):
+            self.ws.write("/tmp/ce_should_never_write_here", "nope")
+
+    def test_a_sibling_directory_sharing_our_prefix_is_refused(self):
+        """`/tmp/ws` string-prefixes `/tmp/ws-evil`. Prefix matching lets this
+        through; path containment does not."""
+        sibling = self.ws.root.parent / (self.ws.root.name + "-evil")
+        with self.assertRaises(ValueError):
+            self.ws.write(f"../{sibling.name}/loot.md", "nope")
+
     def test_mark_updates_plan_status(self):
         self.ws.set_plan([{"id": "a", "what": "x", "status": "todo"}])
         self.ws.mark("a", "done")

@@ -115,7 +115,18 @@ class ContextAssembler:
         self.cache_prefix_breaks = 0
 
     def assemble(self, sections: Iterable[Section]) -> AssembledContext:
-        ordered = sorted(sections, key=lambda s: (s.stability, -s.value))
+        # Within stable tiers, importance sorts EARLY (primacy attention).
+        # Within the volatile tier, importance sorts LATE — the most important
+        # volatile content is the immediate task, and it belongs at the very
+        # end of the window (recency attention). One sort key would put the
+        # task above the timestamp, which is backwards.
+        ordered = sorted(
+            sections,
+            key=lambda s: (
+                s.stability,
+                s.value if s.stability >= Stability.VOLATILE else -s.value,
+            ),
+        )
         kept, dropped = self._fit_to_budget(ordered)
         text = "\n\n".join(self._render(s) for s in kept)
         stable = self._audit_prefix(kept)

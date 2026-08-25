@@ -80,6 +80,44 @@ Primary sources behind the 2026 material in this course. Grouped by the module t
 *   Digital Applied — [Prompt Caching Economics: Cache-First Agent Design](https://www.digitalapplied.com/blog/prompt-caching-economics-cache-first-agent-architecture-2026).
 *   Mem0 — [AI Agent Memory 2026: Progress Benchmark Report](https://mem0.ai/blog/state-of-ai-agent-memory-2026).
 
+## **Graph Engineering (Module 9, Lessons 1–3)**
+
+*   The AI Operator — [What Is Graph Engineering? A Field Guide for Builders](https://theaioperator.io/p/what-is-graph-engineering-a-field). The three-graph distinction, typed edges, and the entity-resolution compounding argument.
+*   Wavect — [Graph Engineering for AI Agents: When the Graph Earns Its Cost](https://wavect.io/blog/graph-engineering-ai-agents/). The five conditions justifying a graph, the hidden costs beyond the database licence, and the kill rule.
+*   [graph-engineering](https://github.com/codejunkie99/graph-engineering). The nine-stage knowledge-graph pipeline and the task-graph patterns (delete fake edges, the diamond, the stop rule, the human gate).
+*   Neo4j — [Agentic GraphRAG: Autonomous Knowledge Graph Construction and Adaptive Retrieval](https://neo4j.com/videos/nodes-ai-2026-agentic-graphrag-autonomous-knowledge-graph-construction-and-adaptive-retrieval-2/). Schema inference and routing between vector search and graph traversal.
+*   TianPan — [GraphRAG vs. Vector RAG: The Architecture Decision Teams Make Too Late](https://tianpan.co/blog/2026-04-19-graphrag-vs-vector-rag-architecture-decision).
+*   Atlan — [Knowledge Graph vs RAG: When Each One Wins (2026)](https://atlan.com/know/knowledge-graphs-vs-rag-for-ai/).
+*   Sowmith Mandadi — [GraphRAG Looks Great Until Entity Resolution Breaks](https://www.sowmith.dev/blog/graphrag-entity-disambiguation). Source of the per-hop compounding figures.
+*   [Zep: A Temporal Knowledge Graph Architecture for Agent Memory](https://arxiv.org/abs/2501.13956) (arXiv 2501.13956), and Neo4j's [Graphiti](https://neo4j.com/blog/developer/graphiti-knowledge-graph-memory/). The bi-temporal model and its four timestamps; the episodes / facts / communities layering.
+*   [Control-Plane Placement Shapes Forgetting: An Architectural Study of Agent Memory Across Thirteen System Configurations](https://arxiv.org/abs/2606.15903) (arXiv 2606.15903). Thirteen configurations over 385 adversarial cases; the mutation-time hook result.
+*   [Calibrated Fusion for Heterogeneous Graph-Vector Retrieval in Multi-Hop QA](https://arxiv.org/pdf/2603.28886) (arXiv 2603.28886).
+*   Mastra — [LangGraph: a guide to stateful AI agent orchestration](https://mastra.ai/articles/langgraph), and [AI Workflow Orchestration in Production](https://aiworkflowlab.dev/article/ai-workflow-orchestration-in-production-building-durable-agent-pipelines-with-langgraph-and-temporal). Checkpointing and durable execution.
+
+## **Continuous Vector Memory Graphs (Module 9, Lesson 3)**
+
+*   Mem0 — [AI Agent Memory 2026: Progress Benchmark Report](https://mem0.ai/blog/state-of-ai-agent-memory-2026) and [Graph-Based Memory Solutions for AI Context: Top 5 Compared](https://mem0.ai/blog/graph-memory-solutions-ai-agents). The hybrid-consensus framing and the LongMemEval comparisons (~64% temporal-graph memory vs ~49% flat vector memory — directional).
+*   SandBase — [Agent Memory Architectures: Vector, Graph & Episodic](https://blog.sandbase.ai/agent-memory-architectures-compared-2026/), and Digital Applied — [AI Agent Memory 2026: Vector, Graph, Episodic](https://www.digitalapplied.com/blog/ai-agent-memory-vector-graph-episodic-2026). "Vector + graph + episodic buffer" as the production default; the ~200–400 ms graph-lookup latency figure.
+*   [HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models](https://arxiv.org/abs/2405.14831) (NeurIPS 2024). Vector-seeded entry into an open knowledge graph, expanded via Personalized PageRank — the entry-then-traverse pattern formalized.
+*   Zep/Graphiti (see the Graph Engineering section above) — the reference continuous, incremental temporal-graph memory with hybrid semantic + keyword + graph search.
+*   FalkorDB — [Graph Database AI Agents: GraphRAG & Memory Guide](https://www.falkordb.com/blog/graph-database-ai-agents/), and Knowlee — [Persistent Memory for AI Agents: Graph vs Vector vs Hybrid](https://www.knowlee.ai/blog/persistent-memory-for-ai-agents). Entry-point traversal mechanics.
+*   [GAAMA: Graph Augmented Associative Memory for Agents](https://arxiv.org/pdf/2603.27910) (arXiv 2603.27910) and [Memanto: Typed Semantic Memory with Information-Theoretic Retrieval](https://arxiv.org/pdf/2604.22085) (arXiv 2604.22085).
+
+**A naming caution:** "continuous vector memory graph" is a descriptive label for this pattern, not yet a term with a canonical definition. The pattern — one store, embeddings on graph elements, incremental updates, vector entry + structural expansion + temporal filtering — is what the sources above converge on; cite the pattern, not the phrase.
+
+## **Autonomous Meta-Harness Systems (Module 9, Lessons 4–5)**
+
+*   Lilian Weng — [Harness Engineering for Self-Improvement](https://lilianweng.github.io/posts/2026-07-04-harness/). **The best single source on this topic.** The three-tier taxonomy, the optimization ladder, the seven challenges, and the failure patterns.
+*   [Meta-Harness: End-to-End Optimization of Model Harnesses](https://www.emergentmind.com/papers/2603.28052) (arXiv 2603.28052). The agentic outer loop over harness code, filesystem access to prior candidates, Pareto optimization over accuracy and context cost, and the reported results.
+*   [Self-Harness: Harnesses That Improve Themselves](https://arxiv.org/html/2606.09498v1) (arXiv 2606.09498). Weakness mining with verifier-grounded failure signatures, bounded edits, held-in/held-out acceptance, and the model-specific harness result.
+*   **[Harness Updating Is Not Harness Benefit: Disentangling Evolution Capabilities in Self-Evolving LLM Agents](https://arxiv.org/pdf/2605.30621)** (arXiv 2605.30621). The central critique of Lesson 5, and the updating-vs-benefit distinction.
+*   [SEAGym: An Evaluation Environment for Self-Evolving LLM Agents](https://arxiv.org/pdf/2606.17546) (arXiv 2606.17546). Catastrophic forgetting, task interference, and why static benchmarks cannot evaluate an evolving agent.
+*   [Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents](https://arxiv.org/abs/2505.22954) (ICLR 2026). The archive-based evolutionary approach, and the finding that discovered improvements transfer across foundation models.
+*   [Safety in Self-Evolving LLM Agent Systems: Threats, Amplification, and Case Studies](https://arxiv.org/pdf/2606.23075) (arXiv 2606.23075).
+*   [From Question Answering to Task Completion: A Survey on Agent System and Harness Design](https://arxiv.org/pdf/2606.20683) (arXiv 2606.20683).
+*   [A Survey of Self-Evolving Agents: What, When, How, and Where to Evolve](https://arxiv.org/pdf/2507.21046) (arXiv 2507.21046).
+*   Ben Dickson — [A primer on self-improving agent harnesses](https://bdtechtalks.substack.com/p/a-primer-on-self-improving-agent).
+
 ---
 
 ## **A Note on Reading These**
@@ -87,3 +125,5 @@ Primary sources behind the 2026 material in this course. Grouped by the module t
 Much of the 2026 agent literature is vendor content, and vendor content is directionally useful and quantitatively unreliable. Where this course cites a specific number — the 18-model context-rot study, effective context at 60–70% of nominal, the ~90% cache read discount — it comes from primary research or published API documentation. Where it cites an adoption or failure statistic (*"40% of multi-agent pilots fail within six months"*), treat it as an indication of direction rather than a measurement, and be suspicious of anyone quoting it to three significant figures.
 
 The durable content of these sources is the **mechanisms**, not the figures. Context rot has a cause in transformer attention and training distribution; that will outlast any particular measurement of it.
+
+**Module 9's literature needs extra caution**, in two directions. The GraphRAG comparisons vary enormously by corpus and extraction quality — reported multi-hop gaps range from a few points to fifty, and the robust finding is the *pattern* (advantage scales with hop count, near zero at one hop), not any single number. And the self-improvement results are published by the people who built the systems, evaluated on benchmarks they chose. That is not a criticism of the work; it is exactly why *Harness Updating Is Not Harness Benefit* is on this list, and why Lesson 5 exists at all. Read the positive results and the critique together, in that order.

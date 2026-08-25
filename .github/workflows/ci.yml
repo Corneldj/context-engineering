@@ -1,0 +1,35 @@
+# The course validating itself on every change — the doctrine it teaches
+# ("run the evals on every harness change") applied to its own repository.
+name: course-ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Library tests, examples, links, task alignment, prose code blocks,
+      # exercise solvability (10/10) AND non-vacuousness (0/10 on skeletons).
+      - name: validate course (python)
+        run: python tools/validate_course.py
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: install mermaid validator
+        working-directory: tools/mermaid
+        run: npm install --no-fund --no-audit
+
+      # Every diagram must parse against the real mermaid parser and carry
+      # alt text (accTitle/accDescr).
+      - name: validate diagrams
+        run: node tools/mermaid/validate.mjs

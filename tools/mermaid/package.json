@@ -1,0 +1,10 @@
+{
+  "name": "course-mermaid-validation",
+  "private": true,
+  "description": "Validates every mermaid diagram in the course parses and carries alt text.",
+  "type": "module",
+  "dependencies": {
+    "mermaid": "^11.0.0",
+    "jsdom": "^24.0.0"
+  }
+}

@@ -103,6 +103,19 @@ class TestBudget(unittest.TestCase):
         self.assertGreater(ctx.breakdown()["system"], ctx.breakdown()["task"])
 
 
+class TestVolatileZoneOrdering(unittest.TestCase):
+    def test_within_the_volatile_tier_importance_sorts_late(self):
+        """Primacy for stable content, recency for volatile: the immediate task
+        is the most important volatile section, so it goes LAST — a timestamp
+        (volatile, low value) belongs in the cheap seats above it."""
+        ctx = ContextAssembler().assemble([
+            Section("task", "do the thing", Stability.VOLATILE, value=100, droppable=False),
+            Section("timestamp", "11:03:07Z", Stability.VOLATILE, value=10),
+            Section("system", "rules", Stability.STATIC, value=100),
+        ])
+        self.assertEqual([s.name for s in ctx.sections], ["system", "timestamp", "task"])
+
+
 class TestEdgeLoading(unittest.TestCase):
     def test_best_first_second_best_last_weakest_buried(self):
         ranked = ["best", "2nd", "3rd", "4th", "worst"]
