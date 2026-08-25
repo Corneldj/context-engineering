@@ -138,6 +138,8 @@ Two design points worth stealing from this:
 
 **The agentic-retrieval mindset, portable to any corpus:** stop thinking of retrieval as a *lookup* and start thinking of it as a *search process the agent conducts* — form a hypothesis, query, read, refine, query again. Vector search is one tool that process can use. Keyword search, metadata filters, and following explicit links are others. The agent decides.
 
+> **A third primitive arrives later.** Module 9, Lesson 2 adds **graph traversal** to this decision guide — for multi-hop questions, temporal questions, and questions about *absence*, none of which similarity or keyword search can answer structurally. The routing logic here extends cleanly; the decision tree there subsumes this one.
+
 ---
 
 ### **Key Takeaways**

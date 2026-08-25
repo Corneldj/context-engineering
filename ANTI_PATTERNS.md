@@ -26,6 +26,10 @@ For each: what you observe, what's usually causing it, the fix that works, and t
 | [12](#12) | Multi-agent system is slow, expensive, and worse | Control |
 | [13](#13) | Output format is inconsistent | Prompt |
 | [14](#14) | Approval gate never rejects anything | Governance |
+| [15](#15) | Graph answers are confidently wrong on deep queries | Graph |
+| [16](#16) | The graph became an expensive vector index | Graph |
+| [17](#17) | Self-improvement gains vanish in production | Meta-harness |
+| [18](#18) | The optimizer plateaued and nobody knows why | Meta-harness |
 
 ---
 
@@ -301,6 +305,89 @@ Then fix the handoffs, where most multi-agent bugs actually live: a **narrow que
 - **Audit a random sample of completed actions**, not just escalated ones. Escalations are a biased sample by construction — they're the cases the agent already knew it was unsure about.
 
 **Where:** Module 7 Lesson 3 · Module 8 Lesson 3
+
+---
+
+<a name="15"></a>
+## **15. Graph answers are confidently wrong on deep queries**
+
+**Symptom.** Two-hop traversals are fine. Four- and five-hop answers are plausible and wrong, with no indication of doubt.
+
+**Cause.** **Compounding entity-resolution error.** Per-hop accuracy `p` gives `p`ⁿ end to end. At 85% — roughly what naive LLM extraction achieves on messy data — a five-hop traversal is 44% trustworthy. Nothing in the output says so.
+
+**The fix.**
+- **Compute your per-hop accuracy and publish `p`ⁿ for your deepest traversal.** If you have never done this, do it before anything else.
+- **Track confidence along the path and withhold below a floor.** Returning "I can't establish this with enough confidence" beats a flat assertion.
+- **Shorten traversals.** Pre-materialize a hop from a curated source — human-maintained links are accurate by construction.
+- **Check whether the fact is derivable rather than extractable.** Dependencies are in build files; ownership is in your service catalogue. Don't extract what you can compute.
+- **Reframe the product** from *decider* to *triage*: a 68%-confident list of twelve candidates with their paths is useful; a flat verdict is not.
+
+**The fix people try first.** Improving the extraction prompt. Going from 85% to 88% takes a five-hop traversal from 44% to 53% — still worse than a coin flip, for considerable effort.
+
+**Where:** Module 9 Lesson 1 §4 · `code/examples/07_graphs.py`
+
+---
+
+<a name="16"></a>
+## **16. The graph became an expensive vector index**
+
+**Symptom.** The knowledge graph is built, maintained, and queried — and answers aren't measurably better than the vector baseline it replaced.
+
+**Usual causes.**
+- **Untyped edges.** If most edges are `related_to`, the graph encodes what cosine similarity already encoded, with more infrastructure and worse recall.
+- **No connected queries in real traffic.** The graph was justified on hypothetical multi-hop questions; actual users ask single-hop factual ones.
+- **Extraction before modelling.** No ontology, so the extractor coined synonyms and no query returns complete results.
+
+**The fix.**
+- **Measure the fraction of real query traffic that needs 2+ hops.** If it's near zero, the honest move is to stop maintaining the graph.
+- **Audit the edge vocabulary.** Eight or fewer types, each answering a specific question. Delete `related_to`; it is a magnet for every relationship the extractor couldn't confidently type.
+- **Retrofit the ontology and re-run extraction through a quality gate** that rejects undeclared types.
+- **Route.** Keep the graph for the queries that need it and send the rest to vector search.
+
+**The fix people try first.** Adding more entities and edges, on the theory that coverage is the problem. This makes maintenance worse and answers no better.
+
+**Where:** Module 9 Lessons 1–2
+
+---
+
+<a name="17"></a>
+## **17. Self-improvement gains vanish in production**
+
+**Symptom.** The optimizer reported +18 points over 200 rounds. Production quality is unchanged, or worse.
+
+**Cause.** **Harness updating is not harness benefit.** The loop optimized against your evaluator, and got better at *that* rather than at the task. It will report this sincerely — its numbers went up, and it has no way to know why.
+
+**The fix.**
+- **Three-way split:** held-in (proposer sees), held-out (gates acceptance only), **sealed** (never touched by the loop). **Report the sealed delta as the headline.**
+- **Rotate the held-out set.** Every accept/reject decision leaks one bit; after a hundred rounds the gate is contaminated.
+- **Track per-category scores across rounds.** The mean can hold while composition churns — that's catastrophic forgetting hiding in an average.
+- **Add red-team probes that assert what failure must look like.** "An unparseable document must produce an error, not a default" is a test case that catches an entire class of reward hack.
+- **Check whether improvements transfer** — a different base model, a different corpus. If they don't, you learned your setup, not the task.
+
+**The fix people try first.** More optimization rounds. This makes the contamination worse.
+
+**Where:** Module 9 Lesson 7 §1 · `code/examples/09_meta_harness.py`
+
+---
+
+<a name="18"></a>
+## **18. The optimizer plateaued and nobody knows why**
+
+**Symptom.** Improvement flattens after a dozen rounds. Candidates keep getting rejected. Nobody can say whether it's finished or broken.
+
+**Two explanations, requiring opposite responses.**
+- **Benign:** the identified weaknesses are fixed; what remains is genuinely hard or isn't a harness problem at all.
+- **Broken — diversity collapse:** the proposer is generating variations on one surface, usually the system prompt because it's easiest to edit. The search died; the smooth plateau is its shape.
+
+**How to distinguish them.**
+- **Surface diversity across recent proposals.** All on one or two surfaces → collapse.
+- **The residual failure distribution.** Unchanged mechanism mix from round 1 → nothing is being fixed. Large clusters shrunk, long tail remaining → genuinely converged.
+
+**The fix for collapse.** Sample from the **archive** of historical candidates rather than only from the current best, and require the proposer to address the **ranked** weakness list rather than choosing freely.
+
+**Also check:** is a whole cluster of failures *not a harness bug at all*? "No total exists on this document" cannot be fixed by any prompt edit — attempting it is exactly how reward hacking starts.
+
+**Where:** Module 9 Lessons 6–7
 
 ---
 

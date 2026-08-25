@@ -8,7 +8,7 @@ Welcome to the course on Context Engineering for AI. It covers the principles, t
 
 ### **Course Structure**
 
-Eight modules. Modules 1–4 build the foundation; 5–6 make systems that act and that you can trust; 7–8 cover the frontier and the architecture that ties it together.
+Nine modules. Modules 1–4 build the foundation; 5–6 make systems that act and that you can trust; 7–8 cover the frontier and the architecture that ties it together; 9 covers making structure explicit — and what happens when systems start rewriting it themselves.
 
 *   [**Module 1: Foundations of Context Engineering**](./Lessons/Module1/)
     *   [Lesson 1: What is Context and Why is it Critical?](./Lessons/Module1/Lesson1_What_is_Context.md)
@@ -56,6 +56,15 @@ Eight modules. Modules 1–4 build the foundation; 5–6 make systems that act a
     *   [Lesson 3: Structuring AI Teams](./Lessons/Module8/Lesson3_Structuring_AI_Teams.md)
     *   [Lesson 4: A Unifying Blueprint — Agentic Architecture](./Lessons/Module8/Lesson4_Agentic_Architecture.md)
 
+*   [**Module 9: Graph Engineering and Autonomous Meta-Harness Systems**](./Lessons/Module9/)
+    *   [Lesson 1: Graph Engineering — Making Structure Explicit](./Lessons/Module9/Lesson1_Graph_Engineering.md)
+    *   [Lesson 2: Knowledge and Memory Graphs](./Lessons/Module9/Lesson2_Knowledge_and_Memory_Graphs.md)
+    *   [Lesson 3: Continuous Vector Memory Graphs](./Lessons/Module9/Lesson3_Continuous_Vector_Memory_Graphs.md)
+    *   [Lesson 4: Execution Graphs — Orchestration as Structure](./Lessons/Module9/Lesson4_Execution_Graphs.md)
+    *   [Lesson 5: Standing Up the Four Graphs — A Practical Setup Guide](./Lessons/Module9/Lesson5_Standing_Up_the_Graphs.md)
+    *   [Lesson 6: Autonomous Meta-Harness Systems](./Lessons/Module9/Lesson6_Autonomous_Meta_Harness.md)
+    *   [Lesson 7: Governing Systems That Rewrite Themselves](./Lessons/Module9/Lesson7_Governing_Self_Modifying_Systems.md)
+
 ---
 
 ### **Runnable Code**
@@ -64,11 +73,27 @@ The course ships a small, **dependency-free reference harness** in [`code/`](./c
 
 ```bash
 cd code
-python3 -m unittest discover -s tests -t .    # 57 tests
+python3 -m unittest discover -s tests -t .    # 134 tests
 python3 examples/03_agent_loop.py             # the same model under two harnesses
+python3 examples/09_meta_harness.py           # a reward hack caught by the gate
 ```
 
-Its test suite is the course's argument in falsifiable form. Each guardrail claim has a test that fails if the guardrail is removed — that a loop must not exit on self-report, that tool errors must never raise, that injection cannot amplify absent capability, that a 20-case eval set cannot detect a 10% change. See [`code/README.md`](./code/README.md), including its honest limitations.
+**Ten auto-graded exercises** turn the reading into practice — you implement, the tests grade:
+
+```bash
+python3 exercises/check.py                    # grade all ten
+python3 exercises/check.py ex04               # grade one
+```
+
+**Six optional live-model labs** show what the offline mock deliberately hides — real non-determinism, real cache counters, real injection. They need an API key and cost well under $1 in total; without a key they exit cleanly. See [`code/labs/`](./code/labs/).
+
+**The course validates itself.** Everything above, plus links, task alignment, prose code blocks, and every diagram:
+
+```bash
+python3 tools/validate_course.py              # 9 checks, the same ones CI runs
+```
+
+Its test suite is the course's argument in falsifiable form. Each claim has a test that fails if the mechanism is removed — that a loop must not exit on self-report, that tool errors must never raise, that injection cannot amplify absent capability, that a 20-case eval set cannot detect a 10% change, that a graph must refuse an undeclared edge type, that superseding a fact must not destroy history, and that a held-out gate catches an optimizer fitting your evaluator. See [`code/README.md`](./code/README.md), including its honest limitations.
 
 ---
 
@@ -80,6 +105,9 @@ Its test suite is the course's argument in falsifiable form. Each guardrail clai
 | [**ANTI_PATTERNS.md**](./ANTI_PATTERNS.md) | Diagnostic reference organized by **symptom** — what you're seeing, what's causing it, and the fix people try first that doesn't work |
 | [**INDEX.md**](./INDEX.md) | Concept → lesson → implementation |
 | [**templates/**](./templates/) | The architecture spec, eval set, red-team cases, tool spec, compaction prompt, and AGENTS.md skeleton |
+| [**code/exercises/**](./code/exercises/) | Ten auto-graded exercises — implement, then `python3 exercises/check.py` |
+| [**code/labs/**](./code/labs/) | Six optional live-model labs (API key, < $1 total) |
+| [**tools/validate_course.py**](./tools/validate_course.py) | The course's own harness: 9 checks, run by CI on every change |
 | [**FINAL_PROJECT.md**](./FINAL_PROJECT.md) | Build, measure, and attack a complete agentic system |
 | [**GLOSSARY.md**](./GLOSSARY.md) | Definitions, including superseded terms marked *(historical)* |
 | [**REFERENCES.md**](./REFERENCES.md) | Primary sources, with a note on which figures to trust |
@@ -97,9 +125,11 @@ Its test suite is the course's argument in falsifiable form. Each guardrail clai
 
 ### **How to Use This Course**
 
-Roughly **28–35 hours** including the hands-on tasks. Each module README states its own estimate, its learning outcomes, and a short **Check yourself** set.
+Roughly **35–44 hours** including the hands-on tasks. Each module README states its own estimate, its learning outcomes, and a short **Check yourself** set.
 
 Work the modules in order; each builds on the last. **Do the hands-on tasks before reading the solutions** — many are designed so the intuitive answer is the wrong one, and discovering that yourself is the point.
+
+Then do the **exercises**. The reading tells you a loop must not exit on the model's self-report; `ex04` fails until your loop actually refuses a model that claims success without doing the work. That gap is where the learning is.
 
 **Three paths through it:**
 

@@ -109,3 +109,56 @@ Quick references: [CHEATSHEET.md](./CHEATSHEET.md) for decisions · [ANTI_PATTER
 | Trajectory evaluation | [M6 L1 §4](./Lessons/Module6/Lesson1_Evaluating_Context_Quality_and_RAG_Performance.md) | `ce/evals.py` |
 | Verification tiers | [M8 L2 §4](./Lessons/Module8/Lesson2_Loop_Engineering.md) | `ce/verify.py` |
 | Victory declaration bias | [M8 L1 §2](./Lessons/Module8/Lesson1_The_Agent_Harness.md) | `examples/03_agent_loop.py` |
+
+---
+
+## **Module 9 concepts**
+
+| Concept | Taught in | Code |
+| :--- | :--- | :--- |
+| Absence / completeness query | [M9 L2 §1](./Lessons/Module9/Lesson2_Knowledge_and_Memory_Graphs.md) | `ce.Graph.missing` |
+| Continuous vector memory graph | [M9 L3](./Lessons/Module9/Lesson3_Continuous_Vector_Memory_Graphs.md) | `ce/vectorgraph.py` |
+| Embed-on-write vs batch rebuild | [M9 L3 §5](./Lessons/Module9/Lesson3_Continuous_Vector_Memory_Graphs.md) | `ce.VectorMemoryGraph.embed_calls` |
+| Entry → expand → filter → rank | [M9 L3 §3](./Lessons/Module9/Lesson3_Continuous_Vector_Memory_Graphs.md) | `ce.VectorMemoryGraph.recall` |
+| Invalidation-aware vectors | [M9 L3 §4](./Lessons/Module9/Lesson3_Continuous_Vector_Memory_Graphs.md) | `examples/10_vector_memory_graph.py` |
+| Node-embedding refresh (mutation point) | [M9 L3 §4](./Lessons/Module9/Lesson3_Continuous_Vector_Memory_Graphs.md) | `ce.VectorMemoryGraph._refresh_node` |
+| Setup guide (all four graphs) | [M9 L5](./Lessons/Module9/Lesson5_Standing_Up_the_Graphs.md) | — |
+| Stable-id contract | [M9 L5 §5](./Lessons/Module9/Lesson5_Standing_Up_the_Graphs.md) | — |
+| Storage ladder / rung promotion | [M9 L5](./Lessons/Module9/Lesson5_Standing_Up_the_Graphs.md) | — |
+| Acceptance gate (held-out) | [M9 L6 §3](./Lessons/Module9/Lesson6_Autonomous_Meta_Harness.md) | `ce.HeldOutGate` |
+| Bi-temporal validity | [M9 L2 §3](./Lessons/Module9/Lesson2_Knowledge_and_Memory_Graphs.md) | `ce/graph.py` |
+| Bounded edit / minimality | [M9 L6 §3](./Lessons/Module9/Lesson6_Autonomous_Meta_Harness.md) | `ce.Candidate` |
+| Checkpointing / durable execution | [M9 L4 §2](./Lessons/Module9/Lesson4_Execution_Graphs.md) | `ce.Checkpointer` |
+| Confidence decay (*p*ⁿ) | [M9 L1 §4](./Lessons/Module9/Lesson1_Graph_Engineering.md) | `ce.graph.hop_confidence` |
+| Diamond pattern | [M9 L4 §3](./Lessons/Module9/Lesson4_Execution_Graphs.md) | — |
+| Diversity collapse | [M9 L7 §2](./Lessons/Module9/Lesson7_Governing_Self_Modifying_Systems.md) | `ce.Archive.diversity` |
+| Entity resolution | [M9 L1 §4](./Lessons/Module9/Lesson1_Graph_Engineering.md) | — |
+| Execution graph | [M9 L4](./Lessons/Module9/Lesson4_Execution_Graphs.md) | `ce/execgraph.py` |
+| Failure signature | [M9 L6 §3](./Lessons/Module9/Lesson6_Autonomous_Meta_Harness.md) | `ce.FailureSignature` |
+| Frozen surfaces | [M9 L7 §3](./Lessons/Module9/Lesson7_Governing_Self_Modifying_Systems.md) | `ce.DEFAULT_FROZEN` |
+| GraphRAG vs vector RAG | [M9 L2 §1](./Lessons/Module9/Lesson2_Knowledge_and_Memory_Graphs.md) | — |
+| Harness-updating vs benefit | [M9 L7 §1](./Lessons/Module9/Lesson7_Governing_Self_Modifying_Systems.md) | — |
+| Idempotency fencing | [M9 L4 §2](./Lessons/Module9/Lesson4_Execution_Graphs.md) | `ce.IdempotencyLedger` |
+| Interrupt / human gate node | [M9 L4 §2](./Lessons/Module9/Lesson4_Execution_Graphs.md) | `ce.execgraph.Interrupted` |
+| Maturity ladder (self-improvement) | [M9 L7 §4](./Lessons/Module9/Lesson7_Governing_Self_Modifying_Systems.md) | — |
+| Meta-harness | [M9 L6](./Lessons/Module9/Lesson6_Autonomous_Meta_Harness.md) | `ce/metaharness.py` |
+| Nine-stage KG pipeline | [M9 L2 §2](./Lessons/Module9/Lesson2_Knowledge_and_Memory_Graphs.md) | — |
+| Ontology as a quality gate | [M9 L2 §2](./Lessons/Module9/Lesson2_Knowledge_and_Memory_Graphs.md) | `ce.graph.OntologyError` |
+| Pareto frontier (accuracy vs cost) | [M9 L6 §4](./Lessons/Module9/Lesson6_Autonomous_Meta_Harness.md) | `ce.Archive.pareto` |
+| Reward hacking | [M9 L7 §2](./Lessons/Module9/Lesson7_Governing_Self_Modifying_Systems.md) | `examples/09_meta_harness.py` |
+| Routing (three primitives) | [M9 L2 §4](./Lessons/Module9/Lesson2_Knowledge_and_Memory_Graphs.md) | — |
+| Self-harness | [M9 L6 §1](./Lessons/Module9/Lesson6_Autonomous_Meta_Harness.md) | — |
+| Stop rule (chain reliability) | [M9 L4 §3](./Lessons/Module9/Lesson4_Execution_Graphs.md) | `ce.execgraph.chain_reliability` |
+| Typed edges | [M9 L1 §2](./Lessons/Module9/Lesson1_Graph_Engineering.md) | `ce.graph.EdgeType` |
+| Weakness mining | [M9 L6 §3](./Lessons/Module9/Lesson6_Autonomous_Meta_Harness.md) | `ce.mine_weaknesses` |
+
+---
+
+## **Practice**
+
+| Want to | Go to |
+| :--- | :--- |
+| Implement the ideas and be graded | [`code/exercises/`](./code/exercises/) — `python3 exercises/check.py` |
+| See what the offline mock hides | [`code/labs/`](./code/labs/) — six live-model labs, < $1 total |
+| Run a live model through the course's harness | [`code/ce/adapters.py`](./code/ce/adapters.py) |
+| Validate a change to this repo | [`tools/validate_course.py`](./tools/validate_course.py) — 9 checks, same as CI |

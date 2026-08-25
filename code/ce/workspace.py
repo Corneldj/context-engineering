@@ -39,9 +39,16 @@ class Workspace:
     # -- raw access --------------------------------------------------------
 
     def path(self, name: str) -> Path:
-        p = (self.root / name).resolve()
-        if not str(p).startswith(str(self.root.resolve())):
-            raise ValueError(f"Refusing to write outside the workspace: {name!r}")
+        """Resolve a name inside the workspace, refusing anything that escapes.
+
+        Uses `is_relative_to`, not string prefix matching: a root of `/tmp/ws`
+        string-prefixes `/tmp/ws-evil`, so the obvious `startswith` check lets a
+        sibling directory through. Path containment is a path question.
+        """
+        root = self.root.resolve()
+        p = (root / name).resolve()
+        if not p.is_relative_to(root):
+            raise ValueError(f"Refusing to touch a path outside the workspace: {name!r}")
         return p
 
     def read(self, name: str, default: str = "") -> str:
