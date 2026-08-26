@@ -1,4 +1,4 @@
-# **Context Engineering for AI — Course Outline**
+# **Agentic Engineering for AI — Course Outline**
 
 Welcome to the course on Context Engineering for AI. It covers the principles, techniques, and practices for building robust, reliable, and efficient AI systems — from a single well-designed prompt to autonomous agents running unattended.
 
